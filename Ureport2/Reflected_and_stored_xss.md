@@ -1,0 +1,25 @@
+Reflected and stored xss in ureport2 v2.2.9
+
+Multiple xss exist in ureport v2.2.9
+
+The vulnerable code at file：ureport2-core-2.2.9.jar method：com.bstek.ureport.console.html.HtmlPreviewServletAction. execute
+
+![image](https://user-images.githubusercontent.com/20945826/218247975-18f01f5d-89e0-47c7-b049-07cd46a5d8a5.png)
+
+The source code is spliced with error data, and the file name submitted by the _u parameter is not filtered, and the file name will be output in the error message, resulting in reflective xss, and the report file list page does not perform output filtering, resulting in file name parameter storage type xss.
+
+Build environment to verify the vuln：
+![image](https://user-images.githubusercontent.com/20945826/218248129-bff4abfb-31ab-4ff0-a77e-6cf331b9d5fd.png)
+
+
+stored xss:
+Save a report and insert xss payload into the submitted file name：
+![image](https://user-images.githubusercontent.com/20945826/218248150-c983f9c8-87af-4725-a132-563c9a33215f.png)
+
+Open the file list page, will trigger xss：
+![image](https://user-images.githubusercontent.com/20945826/218248184-239e98a5-7d48-43ec-b736-d71efc374544.png)
+
+
+reflective xss：
+Visit the URL of the preview page and add xss payload to the _u parameter:
+![image](https://user-images.githubusercontent.com/20945826/218248229-b4d812ed-332f-4c13-81fc-3bdc7cec505d.png)
